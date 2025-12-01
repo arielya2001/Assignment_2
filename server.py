@@ -11,6 +11,7 @@ import openai
 from dotenv import load_dotenv
 import os
 from openai import OpenAI
+import random
 
 load_dotenv()
 client = OpenAI(
@@ -102,6 +103,7 @@ def handle_request(msg: Dict[str, Any], cache: LRUCache) -> Dict[str, Any]:
     use_cache = bool(options.get("cache", True))
 
     started = time.time()
+
     cache_key = json.dumps(msg, sort_keys=True)
 
     if use_cache:

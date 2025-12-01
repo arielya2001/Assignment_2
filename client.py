@@ -20,26 +20,26 @@ def request(host: str, port: int, payload: dict) -> dict:
 
 # ------------------- מצב אינטראקטיבי ------------------- #
 def interactive_client(host, port):
-    print("מוד אינטראקטיבי — כתוב 'exit' כדי לצאת.\n")
+    print("Interactive mode — type 'exit' to quit.\n")
 
     with socket.create_connection((host, port)) as s:
         while True:
-            mode = input("בחר מצב (calc/gpt/exit): ").strip()
+            mode = input("Choose mode (calc/gpt/exit): ").strip()
             if mode == "exit":
-                print("סוגר חיבור... ביי!")
+                print("Closing connection... Bye!")
                 return
 
             if mode not in ("calc", "gpt"):
-                print("מצב לא תקין\n")
+                print("Invalid mode\n")
                 continue
 
             if mode == "calc":
-                expr = input("הכנס ביטוי לחישוב: ").strip()
+                expr = input("Enter expression to calculate: ").strip()
                 payload = {"mode": "calc",
                            "data": {"expr": expr},
                            "options": {"cache": True}}
             else:
-                prompt = input("הכנס פרומפט ל-GPT: ").strip()
+                prompt = input("Enter prompt for GPT: ").strip()
                 payload = {"mode": "gpt",
                            "data": {"prompt": prompt},
                            "options": {"cache": True}}
@@ -54,7 +54,7 @@ def interactive_client(host, port):
 
             line, _, _ = buff.partition(b"\n")
             resp = json.loads(line.decode("utf-8"))
-            print("\nתשובה:\n", json.dumps(resp, ensure_ascii=False, indent=2), "\n")
+            print("\nResult:\n", json.dumps(resp, ensure_ascii=False, indent=2), "\n")
 
 
 def main():
@@ -76,12 +76,12 @@ def main():
     # מצב רגיל — בקשה אחת כמו קודם
     if args.mode == "calc":
         if not args.expr:
-            print("Missing --expr", file=sys.stderr);
+            print("Missing --expr", file=sys.stderr)
             sys.exit(2)
         payload = {"mode": "calc", "data": {"expr": args.expr}, "options": {"cache": not args.no_cache}}
     else:
         if not args.prompt:
-            print("Missing --prompt", file=sys.stderr);
+            print("Missing --prompt", file=sys.stderr)
             sys.exit(2)
         payload = {"mode": "gpt", "data": {"prompt": args.prompt}, "options": {"cache": not args.no_cache}}
 

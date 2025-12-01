@@ -38,7 +38,7 @@ python server.py --host 127.0.0.1 --port 5555
 
 \# Calculate:
 
-python client.py --host 127.0.0.1 --port 5555 --mode calc --expr "sin(max(2,3\*4,5)/7)\*3"
+ "sin(max(2,3\*4,5)/7)\*3"
 
 
 
