@@ -56,3 +56,11 @@ python client.py --host 127.0.0.1 --port 5554 --mode calc --expr "sqrt(16)"
 
 
 
+\## Start interactive mode with Proxy
+
+python proxy.py --listen-port 5554 --server-port 5555
+
+python client.py --host 127.0.0.1 --port 5554 
+
+
+
